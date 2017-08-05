@@ -1,0 +1,47 @@
+<vsetko>:
+	BoxLayout:
+		pos_hint: {'center_x': 0.5, 'top':0.95}
+		size_hint_y: 0.05
+		size_hint_x: 0.75
+		TextInput:
+			id: priecinok
+			multiline: False
+			
+		Button:
+			text: 'vyber'
+			size_hint_x: 0.35
+	Label:
+		pos_hint: {'center_x': 0.75, 'top':1.3}
+		id: stavzoznamumap
+		text: 'zoznam map nie je aktualizovany'
+		text_size: 1000, 15
+	Button:
+		pos_hint: {'center_x': .7, 'top':0.85}
+		text: 'aktualizuj'
+		size_hint_y: 0.1
+		size_hint_x: 0.25
+		on_press:root.zozenzoznam()
+	Spinner:
+		pos_hint: {'center_x': .5, 'top':0.75}
+		size_hint_y: 0.075
+		size_hint_x: 0.8
+		center_x: 1
+		id: vybertyp
+		text: 'Vyber typ'
+		on_text: root.vybertyp()
+	Spinner:
+		id: vyberkontinent
+		pos_hint: {'center_x': .5, 'top':0.67}
+		text: 'Vyber kontinent'
+		size_hint_y: 0.075
+		size_hint_x: 0.8
+		center_x: 1
+		on_text: root.vyberkontinent()
+	Spinner:
+		id: vyberkrajinu
+		pos_hint: {'center_x': .5, 'top':0.59}
+		text: 'Vyber krajinu'
+		size_hint_y: 0.075
+		size_hint_x: 0.8
+		center_x: 1
+		on_text: root.vybral()
