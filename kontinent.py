@@ -2,10 +2,10 @@ from zaznam import zaznam
 
 
 class kontinent:
-    zaznamy = []
 
     def __init__(self, nazov):
         self.nazov = nazov
+        self.zaznamy = []
 
-    def pridajZaznam(self, z):
-        self.zaznamy.append(zaznam(z))
+    def pridajzaznam(self, z):
+        self.zaznamy.append(zaznam(z, self.nazov))

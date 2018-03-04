@@ -1,7 +1,6 @@
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from index import index
-
 from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
 # from kivy.uix.spinner import Spinner
@@ -31,28 +30,38 @@ class vsetko(FloatLayout):
             def koniec():
                 self.remove_widget(postupstahovania)
                 stavzoznamu.text = "Zoznam map je aktualny"
+                vybertypu = self.ids["vybertyp"]
+                for t in self.index.typy:
+                    vybertypu.values.append(t)
+                    print("Pridal som: "+t)
             self.index.spravstrom(koniec)
         self.index.stiahnizoznam(kolbek, dostahovane)
 
 
 
     def vybertyp(self, **args):
-        global pole
         vyberkoninentu = self.ids["vyberkontinent"]
         vybertypu = self.ids["vybertyp"]
         text = vybertypu.text
-        for i in pole[text]:
-            vyberkoninentu.values.append(i)
+        t = self.index.typy[text]
+        for k in t.zoznamkontinentov:
+            vyberkoninentu.values.append(k)
+            print("Pridavam: " + k)
 
     def vyberkontinent(self, **args):
-        global pole
         vyberkontinentu = self.ids["vyberkontinent"]
         vyberkrajiny = self.ids["vyberkrajinu"]
         vybertypu = self.ids["vybertyp"]
-        typ = vybertypu.text
-        kontinent = vyberkontinentu.text
-        for i in pole[typ][kontinent]:
-            vyberkrajiny.values.append(i)
+        ty = vybertypu.text
+        kont = vyberkontinentu.text
+        t = self.index.typy[ty]
+        k = t.kontinenty[kont]
+        print("MAM T: "+t.nazov)
+        print("MAM K: "+k.nazov)
+        print("POCET ZAZNAMOV: " + str(len(k.zaznamy)))
+        for z in k.zaznamy:
+        #    print("Pridavam: " + str(z.atrib))
+            vyberkrajiny.values.append(z.nazov)
 
 
 class main(App):
