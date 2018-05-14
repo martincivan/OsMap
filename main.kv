@@ -1,47 +1,81 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
 <vsetko>:
-	BoxLayout:
-		pos_hint: {'center_x': 0.5, 'top':0.95}
-		size_hint_y: 0.05
-		size_hint_x: 0.75
-		TextInput:
-			id: priecinok
-			multiline: False
-			
-		Button:
-			text: 'vyber'
-			size_hint_x: 0.35
-	Label:
-		pos_hint: {'center_x': 0.75, 'top':1.3}
-		id: stavzoznamumap
-		text: 'zoznam map nie je aktualizovany'
-		text_size: 1000, 15
-	Button:
-		pos_hint: {'center_x': .7, 'top':0.85}
-		text: 'aktualizuj'
-		size_hint_y: 0.1
-		size_hint_x: 0.25
-		on_press:root.zozenzoznam()
-	Spinner:
-		pos_hint: {'center_x': .5, 'top':0.75}
-		size_hint_y: 0.075
-		size_hint_x: 0.8
-		center_x: 1
-		id: vybertyp
-		text: 'Vyber typ'
-		on_text: root.vybertyp()
-	Spinner:
-		id: vyberkontinent
-		pos_hint: {'center_x': .5, 'top':0.67}
-		text: 'Vyber kontinent'
-		size_hint_y: 0.075
-		size_hint_x: 0.8
-		center_x: 1
-		on_text: root.vyberkontinent()
-	Spinner:
-		id: vyberkrajinu
-		pos_hint: {'center_x': .5, 'top':0.59}
-		text: 'Vyber krajinu'
-		size_hint_y: 0.075
-		size_hint_x: 0.8
-		center_x: 1
-		on_text: root.vybral()
+    
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            
+            ActionPrevious:
+                id: nazad
+                app_icon: 'ikony/icon.png'
+                title: 'OsMap'
+                with_previous: False if obrazovky.current == 'hlavna' else True
+                on_release: root.nastav_obrazovku('hlavna')
+            ActionLabel:
+                id: stavzoznamumap
+                text: 'zoznam map nie je aktualizovany'
+            ActionOverflow:
+                ActionButton:              
+                    text: 'Aktualizuj'
+                    on_release: root.zozenzoznam
+                ActionButton:
+                    text: 'Nastavenia'
+                    on_release: root.nastav_obrazovku('nastavenia')
+    ScreenManager:
+        id: obrazovky
+        transition: NoTransition()
+        Screen:
+            id: hlavna
+            name: 'hlavna'
+            GridLayout:
+                size_hint_y: 0.9
+                cols: 1
+                padding: "8dp"
+                Accordion:
+                    orientation: 'vertical'
+                    AccordionItem:
+                        title: 'Vyber typu'
+                        Spinner:
+                            pos_hint: {'top':1}
+                            size_hint_y: 0.075
+                            size_hint_x: 0.8
+                            center_x: 1
+                            id: vybertyp
+                            text: 'Vyber typ'
+                            on_text: root.vybertyp()
+                    AccordionItem:
+                        title: 'Vyber kontinentu'
+                        Spinner:
+                            id: vyberkontinent
+                            pos_hint: {'top':1}
+                            text: 'Vyber kontinent'
+                            size_hint_y: 0.075
+                            size_hint_x: 0.8
+                            center_x: 1
+                            on_text: root.vyberkontinent()
+                    AccordionItem:
+                        title: 'Vyber krajiny'
+                        Spinner:
+                            id: vyberkrajinu
+                            pos_hint: {'top':1}
+                            text: 'Vyber krajinu'
+                            size_hint_y: 0.075
+                            size_hint_x: 0.8
+                            center_x: 1
+                            on_text: root.vybral()
+                        
+                        
+        Screen:
+            id: nastavenia
+            name: 'nastavenia'
+            BoxLayout:
+                pos_hint: {'center_x': 0.5, 'top':0.9}
+                size_hint_y: 0.05
+                size_hint_x: 0.75
+                TextInput:
+                    id: priecinok
+                    multiline: False
+                    
+                Button:
+                    text: 'vyber'
+                    size_hint_x: 0.35

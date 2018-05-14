@@ -3,6 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from index import index
 from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
+from kivy.uix.screenmanager import FadeTransition
 # from kivy.uix.spinner import Spinner
 # from kivy.uix.button import Button
 # from kivy.uix.label import Label
@@ -14,7 +15,7 @@ class vsetko(FloatLayout):
     def zozenzoznam(self):
         oznam = self.ids["stavzoznamumap"]
         priecinok = self.ids["priecinok"]
-        postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False)
+        postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3), pos_hint={'center':(.5,.5)})
         progresbar = ProgressBar(max=128)
         postupstahovania.add_widget(progresbar)
         self.add_widget(postupstahovania)
@@ -62,10 +63,19 @@ class vsetko(FloatLayout):
         for z in k.zaznamy:
         #    print("Pridavam: " + str(z.atrib))
             vyberkrajiny.values.append(z.nazov)
-
+    
+    def nastav_obrazovku(self, obrazovka):
+        obrazovky = self.ids["obrazovky"]
+        obrazovky.current = obrazovka
+        nazad = self.ids["nazad"]
+        if obrazovka == "hlavna":
+            nazad.title = "OsMap"
+        else:
+            nazad.title = "OsMap - " + obrazovka
 
 class main(App):
     def build(self):
+        self.title='OsMap'
         return vsetko()
 
 
