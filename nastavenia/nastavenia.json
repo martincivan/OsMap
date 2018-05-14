@@ -1,0 +1,13 @@
+[
+    {
+        "type": "title",
+        "title": "OsMap - nastavenia"
+    },
+      {
+        "type": "path",
+        "title": "Priecinok",
+        "desc": "Hlavny priecinok s datami",
+        "section": "Hlavne",
+        "key": "priecinok"
+    }
+]

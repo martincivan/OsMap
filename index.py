@@ -4,7 +4,7 @@ import threading
 from typ import typ
 
 
-class index:
+class Index:
     adresa = 'http://download.osmand.net/get_indexes.php'
     meno = 'zoznam.xml'
     kam = ''

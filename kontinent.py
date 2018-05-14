@@ -1,11 +1,11 @@
-from zaznam import zaznam
+from zaznam import Zaznam
 
 
-class kontinent:
+class Kontinent:
 
     def __init__(self, nazov):
         self.nazov = nazov
         self.zaznamy = []
 
     def pridajzaznam(self, z):
-        self.zaznamy.append(zaznam(z, self.nazov))
+        self.zaznamy.append(Zaznam(z, self.nazov))

@@ -1,4 +1,4 @@
-from kontinent import kontinent
+from kontinent import Kontinent
 import re
 
 class typ:
@@ -8,7 +8,7 @@ class typ:
         self.nazov = t
         self.kontinenty = {}
         for zkont in self.zoznamkontinentov:
-            self.kontinenty[zkont] = kontinent(zkont)
+            self.kontinenty[zkont] = Kontinent(zkont)
 
     def pridajzaznam(self, z):
         try:

@@ -1,20 +1,22 @@
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
-from index import index
+from index import Index
 from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.screenmanager import FadeTransition
-# from kivy.uix.spinner import Spinner
-# from kivy.uix.button import Button
-# from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.settings import SettingsWithTabbedPanel
+from kivy.config import ConfigParser
 
-class vsetko(FloatLayout):
+
+class Vsetko(FloatLayout):
     orientation = 'vertical'
     global pole
+    sceny = {}
 
     def zozenzoznam(self):
         oznam = self.ids["stavzoznamumap"]
-        priecinok = self.ids["priecinok"]
+        priecinok = Main.konfig.get('Hlavne', 'priecinok')
         postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3), pos_hint={'center':(.5,.5)})
         progresbar = ProgressBar(max=128)
         postupstahovania.add_widget(progresbar)
@@ -23,7 +25,7 @@ class vsetko(FloatLayout):
 
         def kolbek(blocks, block_size, total_size):
             progresbar.value = blocks
-        self.index = index()
+        self.index = Index()
 
         def dostahovane():
             self.remove_widget(progresbar)
@@ -73,11 +75,27 @@ class vsetko(FloatLayout):
         else:
             nazad.title = "OsMap - " + obrazovka
 
-class main(App):
+    def spravnastavenia(self):
+        if 'nastavenia' not in self.sceny:
+            nastavenia = SettingsWithTabbedPanel()
+            nastavenia.bind(on_close=(lambda l: self.nastav_obrazovku("hlavna")))
+            lejaut = self.ids["lejaut_nastaveni"]
+            nastavenia.add_json_panel("Hlavne", Main.konfig, "nastavenia/nastavenia.json")
+            lejaut.add_widget(nastavenia)
+            self.sceny['nastavenia'] = nastavenia
+        self.nastav_obrazovku('nastavenia')
+
+
+class Main(App):
+
+    konfig=ConfigParser()
+
     def build(self):
         self.title='OsMap'
-        return vsetko()
+        self.konfig.read('nastavenia/nastavenia.ini')
+        self.sceny = set()
+        return Vsetko()
 
 
 if __name__ == "__main__":
-    main().run()
+    Main().run()

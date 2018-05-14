@@ -1,6 +1,6 @@
 
 
-class zaznam:
+class Zaznam:
 
     def __init__(self, z, kon):
         self.typ = z.tag
