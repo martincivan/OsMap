@@ -84,14 +84,14 @@ class Vsetko(FloatLayout):
             lejaut.add_widget(nastavenia)
             self.sceny['nastavenia'] = nastavenia
         self.nastav_obrazovku('nastavenia')
-
-
+        
 class Main(App):
 
     konfig=ConfigParser()
 
     def build(self):
         self.title='OsMap'
+        self.icon='ikony/icon.png'
         self.konfig.read('nastavenia/nastavenia.ini')
         self.sceny = set()
         return Vsetko()
