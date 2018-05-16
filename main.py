@@ -101,6 +101,9 @@ class Main(App):
         konfig_json_cesta = Path('nastavenia/nastavenia.json')
         if konfig_cesta.is_file() and konfig_json_cesta.is_file:
             self.konfig.read('nastavenia/nastavenia.ini')
+            direktoria = Path(self.konfig.get('Hlavne', 'priecinok'))
+            if not direktoria.exists():
+                self.konfig.set('Hlavne', 'priecinok', Path.home())
             self.sceny = set()
             return Vsetko()
         else:
