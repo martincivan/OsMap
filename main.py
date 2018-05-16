@@ -89,6 +89,13 @@ class Vsetko(FloatLayout):
 class Chyba(FloatLayout):
     orientation = 'vertical'
     
+    def nasatv_spravu(self, sprava):
+        label = self.ids['sprava']
+        label.text = label.text % sprava
+        
+
+        
+    
         
 class Main(App):
 
@@ -99,7 +106,7 @@ class Main(App):
         self.icon='ikony/icon.png'
         konfig_cesta = Path('nastavenia/nastavenia.ini')
         konfig_json_cesta = Path('nastavenia/nastavenia.json')
-        if konfig_cesta.is_file() and konfig_json_cesta.is_file:
+        if konfig_cesta.is_file() and konfig_json_cesta.is_file():
             self.konfig.read('nastavenia/nastavenia.ini')
             direktoria = Path(self.konfig.get('Hlavne', 'priecinok'))
             if not direktoria.exists():
@@ -107,7 +114,9 @@ class Main(App):
             self.sceny = set()
             return Vsetko()
         else:
-            return Chyba()
+            chyba = Chyba()
+            chyba.nasatv_spravu('Nepodarilo sa najst konfiguraciu.')
+            return chyba
 
 
 if __name__ == "__main__":

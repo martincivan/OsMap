@@ -80,10 +80,11 @@
             source: 'ikony/icon.png'
             pos_hint: {'center_x': 0.5, 'top':1}
         Label:
+            id: sprava
             text_size: self.size
             halign: 'center'
             valign: 'middle'
-            text: '[size=48][b]OsMap[/b] - chyba[/size]\n\nNepodarilo sa nacitat konfiguraciu.\nOK ukonci aplikaciu.'
+            text: '[size=48][b]OsMap[/b] - chyba[/size]\n\n%s\nOK ukonci aplikaciu.'
             pos_hint: {'center_x': 0.5, 'center_y':0.4}       
             markup: True
             
