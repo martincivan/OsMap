@@ -68,3 +68,27 @@
                 size_hint_y: 0.9
                 pos_hint: {'center_x':0.5}
                 id: lejaut_nastaveni
+                
+                
+                
+<Chyba>:
+    GridLayout:
+        cols: 1
+        padding: '8dp'
+        spacing: '8dp'
+        Image:
+            source: 'ikony/icon.png'
+            pos_hint: {'center_x': 0.5, 'top':1}
+        Label:
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+            text: '[size=48][b]OsMap[/b] - chyba[/size]\n\nNepodarilo sa nacitat konfiguraciu.\nOK ukonci aplikaciu.'
+            pos_hint: {'center_x': 0.5, 'center_y':0.4}       
+            markup: True
+            
+        Button:
+            text: 'OK'
+            size_hint_x: 0.1
+            size_hint_y: 0.2
+            on_release: app.stop()

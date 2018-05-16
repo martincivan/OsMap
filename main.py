@@ -7,6 +7,7 @@ from kivy.uix.screenmanager import FadeTransition
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.settings import SettingsWithTabbedPanel
 from kivy.config import ConfigParser
+from pathlib import Path
 
 
 class Vsetko(FloatLayout):
@@ -85,6 +86,10 @@ class Vsetko(FloatLayout):
             self.sceny['nastavenia'] = nastavenia
         self.nastav_obrazovku('nastavenia')
         
+class Chyba(FloatLayout):
+    orientation = 'vertical'
+    
+        
 class Main(App):
 
     konfig=ConfigParser()
@@ -92,9 +97,14 @@ class Main(App):
     def build(self):
         self.title='OsMap'
         self.icon='ikony/icon.png'
-        self.konfig.read('nastavenia/nastavenia.ini')
-        self.sceny = set()
-        return Vsetko()
+        konfig_cesta = Path('nastavenia/nastavenia.ini')
+        konfig_json_cesta = Path('nastavenia/nastavenia.json')
+        if konfig_cesta.is_file() and konfig_json_cesta.is_file:
+            self.konfig.read('nastavenia/nastavenia.ini')
+            self.sceny = set()
+            return Vsetko()
+        else:
+            return Chyba()
 
 
 if __name__ == "__main__":
