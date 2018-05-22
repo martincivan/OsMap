@@ -8,6 +8,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.settings import SettingsWithTabbedPanel
 from kivy.config import ConfigParser
 from pathlib import Path
+from kivy.adapters.listadapter import ListAdapter
+from kivy.uix.listview import ListItemButton
 
 
 class Vsetko(FloatLayout):
@@ -30,27 +32,30 @@ class Vsetko(FloatLayout):
 
         def dostahovane():
             self.remove_widget(progresbar)
-            postupstahovania.text = "Spracovavam zoznamy"
             def koniec():
                 self.remove_widget(postupstahovania)
                 stavzoznamu.text = "Zoznam map je aktualny"
                 vybertypu = self.ids["vybertyp"]
-                for t in self.index.typy:
-                    vybertypu.values.append(t)
-                    print("Pridal som: "+t)
+                konvertor = lambda row_index, rec: {'text': rec,
+                                         'size_hint_y': None,
+                                         'height': 25}
+                adapter = ListAdapter(data=self.index.typy, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
+                adapter.bind(on_selection_change=self.vybertyp)
+                vybertypu.adapter = adapter
             self.index.spravstrom(koniec)
         self.index.stiahnizoznam(kolbek, dostahovane)
 
 
-
-    def vybertyp(self, **args):
+    def vybertyp(self, vyber):
+        print("Vybral som")
         vyberkoninentu = self.ids["vyberkontinent"]
-        vybertypu = self.ids["vybertyp"]
-        text = vybertypu.text
-        t = self.index.typy[text]
-        for k in t.zoznamkontinentov:
-            vyberkoninentu.values.append(k)
-            print("Pridavam: " + k)
+        text = vyber.selection[0]
+        print("Vybrate: " + text.text)
+        t = self.index.typy[text.text]
+        konvertor = lambda row_index, rec: {'text': rec,
+                                         'size_hint_y': None,
+                                         'height': 25}
+        vyberkoninentu.adapter = ListAdapter(data=t.zoznamkontinentov, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
 
     def vyberkontinent(self, **args):
         vyberkontinentu = self.ids["vyberkontinent"]
@@ -60,9 +65,6 @@ class Vsetko(FloatLayout):
         kont = vyberkontinentu.text
         t = self.index.typy[ty]
         k = t.kontinenty[kont]
-        print("MAM T: "+t.nazov)
-        print("MAM K: "+k.nazov)
-        print("POCET ZAZNAMOV: " + str(len(k.zaznamy)))
         for z in k.zaznamy:
         #    print("Pridavam: " + str(z.atrib))
             vyberkrajiny.values.append(z.nazov)

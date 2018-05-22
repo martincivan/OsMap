@@ -2,7 +2,7 @@ from kontinent import Kontinent
 import re
 
 class typ:
-    zoznamkontinentov = ["Europe", "Asia"]
+    zoznamkontinentov = ["Europe", "Asia", "South America", "North America", "Africa", "Australia"]
 
     def __init__(self, t):
         self.nazov = t
@@ -12,7 +12,6 @@ class typ:
 
     def pridajzaznam(self, z):
         try:
-            #print("Pridavam zaznam pre typ: {0} zaznam: {1}".format(self.nazov, z.attrib))
             nazov = z.attrib['name']
             kont = None
             for k in self.zoznamkontinentov:
@@ -20,7 +19,6 @@ class typ:
                 if je:
                     kont = k
             if kont:
-                print("Pridavam pre typ: {0}, kontinent: {1}, zaznam: {2}".format(self.nazov, kont, str(z.attrib)))
                 self.kontinenty[kont].pridajzaznam(z)
         except KeyError as inst:
             print("KeyError"+str(inst))

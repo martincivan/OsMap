@@ -13,14 +13,13 @@ class Index:
 
     def __init__(self):
         for t in self.zoznamtypov:
-            print("Pridavam: "+t)
             self.typy[t] = typ(t)
 
     def stiahnizoznam(self, kolbek, koniec):
         self.odkial = self.kam+self.meno
 
         def makaj():
-            urlretrieve(self.adresa, self.kam + self.meno, kolbek)
+            # urlretrieve(self.adresa, self.kam + self.meno, kolbek)
             koniec()
         vlakno = threading.Thread(target=makaj)
         vlakno.start()
@@ -36,7 +35,6 @@ class Index:
 
 
     def spravzoznamy(self):
-        print("RObim zoznamy pre typy: "+str(self.typy))
         for dieta in self.koren:
             try:
                 #print("Pridavam: "+dieta.attrib['type'])

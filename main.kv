@@ -32,35 +32,18 @@
                 Accordion:
                     orientation: 'vertical'
                     AccordionItem:
+                        collapse: False
                         title: 'Vyber typu'
-                        Spinner:
-                            pos_hint: {'top':1}
-                            size_hint_y: 0.075
-                            size_hint_x: 0.8
-                            center_x: 1
+                        ListView:
                             id: vybertyp
-                            text: 'Vyber typ'
-                            on_text: root.vybertyp()
                     AccordionItem:
                         title: 'Vyber kontinentu'
-                        Spinner:
+                        ListView:
                             id: vyberkontinent
-                            pos_hint: {'top':1}
-                            text: 'Vyber kontinent'
-                            size_hint_y: 0.075
-                            size_hint_x: 0.8
-                            center_x: 1
-                            on_text: root.vyberkontinent()
                     AccordionItem:
                         title: 'Vyber krajiny'
-                        Spinner:
+                        ListView:
                             id: vyberkrajinu
-                            pos_hint: {'top':1}
-                            text: 'Vyber krajinu'
-                            size_hint_y: 0.075
-                            size_hint_x: 0.8
-                            center_x: 1
-                            on_text: root.vybral()
         Screen:
             id: obrazovka_nastaveni
             name: 'nastavenia'
