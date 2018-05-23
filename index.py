@@ -8,7 +8,7 @@ class Index:
     adresa = 'http://download.osmand.net/get_indexes.php'
     meno = 'zoznam.xml'
     kam = ''
-    zoznamtypov = ['hillshade', 'map', 'wikimap', 'voice', 'fonts', 'depth', 'road_map', 'srtm_map', 'region']
+    zoznamtypov = ['hillshade', 'map', 'wikimap', 'wikivoyage', 'voice', 'fonts', 'depth', 'road_map', 'srtm_map', 'region']
     typy = {}
 
     def __init__(self):

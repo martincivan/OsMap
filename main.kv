@@ -1,4 +1,6 @@
 #:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import ListItemButton kivy.uix.listview.ListItemButton
+
 <vsetko>:
     ActionBar:
         pos_hint: {'top':1}
@@ -34,16 +36,45 @@
                     AccordionItem:
                         collapse: False
                         title: 'Vyber typu'
-                        ListView:
+                        RecycleView:
                             id: vybertyp
+                            viewclass: 'Zobrazenie'
+                            SelectableRecycleBoxLayout:
+                                id: lejaut_typov
+                                pri_vybere: root.vybertyp
+                                default_size: None, dp(56)
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical' 
                     AccordionItem:
                         title: 'Vyber kontinentu'
-                        ListView:
+                        RecycleView:
                             id: vyberkontinent
+                            viewclass: 'Zobrazenie'
+                            SelectableRecycleBoxLayout:
+                                id: lejaut_kontinentov
+                                pri_vybere: root.vyberkontinent
+                                default_size: None, dp(56)
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical' 
                     AccordionItem:
                         title: 'Vyber krajiny'
-                        ListView:
+                        RecycleView:
                             id: vyberkrajinu
+                            viewclass: 'Zobrazenie'
+                            SelectableRecycleBoxLayout:
+                                id: lejaut_krajin
+                                pri_vybere: root.vyberkrajinu
+                                default_size: None, dp(56)
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical' 
+                                multiselect: True
+                                touch_multiselect: True
         Screen:
             id: obrazovka_nastaveni
             name: 'nastavenia'
@@ -52,8 +83,68 @@
                 pos_hint: {'center_x':0.5}
                 id: lejaut_nastaveni
                 
-                
-                
+<Zobrazenie>:
+    
+    size_hint: (1, None)
+    text: root.typ
+    font_size: 0
+    orientation: 'vertical'
+    BoxLayout:
+        canvas:
+            Color:
+                rgb: (0.17578125, 0.57421875, 0.72265625) if root.selected else (0.3, 0.3, 0.3) 
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+        padding: "5dp"
+        orientation: 'vertical'
+        GridLayout:
+            cols: 2
+            spacing: "10dp"
+            Image:
+                source: 'ikony/iconka.png' if root.selected else root.ikona
+                size_hint_x: None
+                width: self.height
+                pos_hint: {'center_y' : 0.5}
+            GridLayout:
+                cols: 2
+                rows: 2
+                Label:
+                    text: root.nadpis
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    bold: True
+                    font_size: dp(16)
+                Label:
+                    size_hint_x: 0.3
+                    text: root.velkost
+                    text_size: self.size
+                    halign: 'right'
+                    valign: 'middle'
+                Label:
+                    text: root.popis
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                Label:
+                    size_hint_x: 0.3
+                    text: root.datum
+                    text_size: self.size
+                    halign: 'right'
+                    valign: 'middle'
+                    
+    BoxLayout:
+        size_hint_y: None
+        height: "2dp"
+ 
+<Typy@Zobrazenie>:
+    on_release: app.root.vybertyp(root.typ)
+    
+<Kontinenty@Zobrazenie>:
+    on_release: app.root.vyberkontinent(root.typ)
+ 
+ 
 <Chyba>:
     GridLayout:
         cols: 1
@@ -76,3 +167,7 @@
             size_hint_x: 0.1
             size_hint_y: 0.2
             on_release: app.stop()
+
+            
+            
+            
