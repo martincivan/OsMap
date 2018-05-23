@@ -10,6 +10,7 @@ from kivy.config import ConfigParser
 from pathlib import Path
 from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.listview import ListItemButton
+from zobrazenie import Zobrazenie
 
 
 class Vsetko(FloatLayout):
@@ -36,38 +37,49 @@ class Vsetko(FloatLayout):
                 self.remove_widget(postupstahovania)
                 stavzoznamu.text = "Zoznam map je aktualny"
                 vybertypu = self.ids["vybertyp"]
-                konvertor = lambda row_index, rec: {'text': rec,
-                                         'size_hint_y': None,
-                                         'height': 25}
-                adapter = ListAdapter(data=self.index.typy, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
-                adapter.bind(on_selection_change=self.vybertyp)
-                vybertypu.adapter = adapter
+                vybertypu.data = [{"datum" : "datum",
+                                "ikona" : "ikony/icon.png",
+                                "nadpis" : str(x),
+                                "popis" : "Redkovka " + str(x),
+                                "pri_vybere" : self.vybertyp,
+                                "typ" : str(x),
+                                "velkost" : "velkost" } for x in self.index.typy]
             self.index.spravstrom(koniec)
         self.index.stiahnizoznam(kolbek, dostahovane)
 
 
-    def vybertyp(self, vyber):
+    def vybertyp(self, *args):
         print("Vybral som")
         vyberkoninentu = self.ids["vyberkontinent"]
-        text = vyber.selection[0]
-        print("Vybrate: " + text.text)
-        t = self.index.typy[text.text]
-        konvertor = lambda row_index, rec: {'text': rec,
-                                         'size_hint_y': None,
-                                         'height': 25}
-        vyberkoninentu.adapter = ListAdapter(data=t.zoznamkontinentov, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
+        # text = vyber.selection[0]
+        self.vybraty_typ = args[0]
+        print("Vybrate: " + self.vybraty_typ)
+        t = self.index.typy[self.vybraty_typ]
+        vyberkoninentu.data = [{"datum" : "datum",
+                                "ikona" : "ikony/icon.png", 
+                                "nadpis" : str(x), 
+                                "popis" : "Redkovka " + str(x), 
+                                "pri_vybere" : self.vyberkontinent, 
+                                "typ" : str(x), "velkost" : "velkost" } for x in t.zoznamkontinentov]
+        # konvertor = lambda row_index, rec: {'text': rec,
+                                         # 'size_hint_y': None,
+                                         # 'height': 25}
+        # vyberkoninentu.adapter = ListAdapter(data=t.zoznamkontinentov, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
 
-    def vyberkontinent(self, **args):
-        vyberkontinentu = self.ids["vyberkontinent"]
+    def vyberkontinent(self, *args):
         vyberkrajiny = self.ids["vyberkrajinu"]
-        vybertypu = self.ids["vybertyp"]
-        ty = vybertypu.text
-        kont = vyberkontinentu.text
-        t = self.index.typy[ty]
-        k = t.kontinenty[kont]
-        for z in k.zaznamy:
-        #    print("Pridavam: " + str(z.atrib))
-            vyberkrajiny.values.append(z.nazov)
+        t = self.index.typy[self.vybraty_typ]
+        k = t.kontinenty[args[0]]
+        vyberkrajiny.data = [{"datum" : "datum", 
+                            "ikona" : "ikony/icon.png", 
+                            "nadpis" : x.pekny_nazov(), 
+                            "popis" : "Subor: " + x.nazov, 
+                            "pri_vybere" : self.vyberkrajinu, 
+                            "typ" : str(x), 
+                            "velkost" : "velkost" } for x in k.zaznamy]
+    
+    def vyberkrajinu(self, *args):
+        pass
     
     def nastav_obrazovku(self, obrazovka):
         obrazovky = self.ids["obrazovky"]
