@@ -43,7 +43,8 @@ class Vsetko(FloatLayout):
                                 "popis" : "Redkovka " + str(x),
                                 "pri_vybere" : self.vybertyp,
                                 "typ" : str(x),
-                                "velkost" : "velkost" } for x in self.index.typy]
+                                "velkost" : "velkost", 
+                                "zaznam" : x} for x in self.index.typy]
             self.index.spravstrom(koniec)
         self.index.stiahnizoznam(kolbek, dostahovane)
 
@@ -51,7 +52,6 @@ class Vsetko(FloatLayout):
     def vybertyp(self, *args):
         print("Vybral som")
         vyberkoninentu = self.ids["vyberkontinent"]
-        # text = vyber.selection[0]
         self.vybraty_typ = args[0]
         print("Vybrate: " + self.vybraty_typ)
         t = self.index.typy[self.vybraty_typ]
@@ -59,24 +59,24 @@ class Vsetko(FloatLayout):
                                 "ikona" : "ikony/icon.png", 
                                 "nadpis" : str(x), 
                                 "popis" : "Redkovka " + str(x), 
-                                "pri_vybere" : self.vyberkontinent, 
-                                "typ" : str(x), "velkost" : "velkost" } for x in t.zoznamkontinentov]
-        # konvertor = lambda row_index, rec: {'text': rec,
-                                         # 'size_hint_y': None,
-                                         # 'height': 25}
-        # vyberkoninentu.adapter = ListAdapter(data=t.zoznamkontinentov, args_converter=konvertor, cls=ListItemButton, selection_mode='single', allow_empty_selection=False)
-
+                                "pri_vybere" : self.vyberkontinent,
+                                "typ" : str(x),
+                                "velkost" : "velkost" } for x in t.zoznamkontinentov]
+       
     def vyberkontinent(self, *args):
         vyberkrajiny = self.ids["vyberkrajinu"]
         t = self.index.typy[self.vybraty_typ]
         k = t.kontinenty[args[0]]
+        lejaut_krajin = self.ids["lejaut_krajin"]
+               
         vyberkrajiny.data = [{"datum" : "datum", 
                             "ikona" : "ikony/icon.png", 
                             "nadpis" : x.pekny_nazov(), 
                             "popis" : "Subor: " + x.nazov, 
                             "pri_vybere" : self.vyberkrajinu, 
-                            "typ" : str(x), 
-                            "velkost" : "velkost" } for x in k.zaznamy]
+                            "typ" : str(x),
+                            "velkost" : "velkost" } for x in sorted(k.zaznamy, key = lambda zaznam: zaznam.pekny_nazov())]
+        
     
     def vyberkrajinu(self, *args):
         pass

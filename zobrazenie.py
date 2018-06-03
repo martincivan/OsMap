@@ -11,8 +11,7 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.app import App
 
 class SelectableRecycleBoxLayout(LayoutSelectionBehavior, RecycleBoxLayout):
-    pri_vybere = None
-    vybrate = None
+    pass
     
 
 
@@ -23,6 +22,7 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     popis = StringProperty()#"Toto je barjaka redkovka"
     datum = StringProperty()#"9.6.2017"
     velkost = StringProperty()#"37 cm"
+    zaznam = None
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
@@ -31,6 +31,7 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         self.index = index
+        rv._layout_manager.deselect_node(index)
         return super(Zobrazenie, self).refresh_view_attrs(
             rv, index, data)
 
@@ -45,10 +46,8 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
         if is_selected:
-            #print("selection changed to {0}".format(rv.data[index]))
-            # self.parent.vybrate = rv.data[index]
+            print(rv.layout_manager.selected_nodes)
             self.pri_vybere(rv.data[index]["typ"])
         else:
-            #print("selection removed for {0}".format(rv.data[index]))
             pass
 
