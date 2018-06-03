@@ -15,7 +15,7 @@ class typ:
             nazov = z.attrib['name']
             kont = None
             for k in self.zoznamkontinentov:
-                je = re.search(k.lower(), nazov.lower())
+                je = re.search(k.lower().replace(' ',''), nazov.lower())
                 if je:
                     kont = k
             if kont:
