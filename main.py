@@ -68,7 +68,10 @@ class Vsetko(FloatLayout):
         t = self.index.typy[self.vybraty_typ]
         k = t.kontinenty[args[0]]
         lejaut_krajin = self.ids["lejaut_krajin"]
-               
+        
+        for x in range(len(vyberkrajiny.data)):
+            vyberkrajiny._layout_manager.deselect_node(x)
+            
         vyberkrajiny.data = [{"datum" : "datum", 
                             "ikona" : "ikony/icon.png", 
                             "nadpis" : x.pekny_nazov(), 

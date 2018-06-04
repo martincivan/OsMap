@@ -31,7 +31,7 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         self.index = index
-        rv._layout_manager.deselect_node(index)
+        # rv._layout_manager.deselect_node(index)
         return super(Zobrazenie, self).refresh_view_attrs(
             rv, index, data)
 
@@ -46,7 +46,7 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
         if is_selected:
-            print(rv.layout_manager.selected_nodes)
+            # print(rv.layout_manager.selected_nodes)
             self.pri_vybere(rv.data[index]["typ"])
         else:
             pass
