@@ -34,6 +34,7 @@
                 Accordion:
                     orientation: 'vertical'
                     AccordionItem:
+                        collapse: False
                         title: 'Vyber kontinentu'
                         GridLayout:
                             orientation: 'horizontal'
@@ -52,7 +53,7 @@
                                 viewclass: 'Zobrazenie'
                                 SelectableRecycleBoxLayout:
                                     id: lejaut_kontinentov
-                                    pri_vybere: root.vyberkontinent
+                                    pri_vybere: root.vyberkrajinu
                                     default_size: None, dp(56)
                                     default_size_hint: 1, None
                                     size_hint_y: None

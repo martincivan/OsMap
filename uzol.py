@@ -8,3 +8,6 @@ class Uzol:
     def pridajzaznam(self, zaznam):
         self.typy.add(zaznam.typ)
         self.zaznamy[zaznam.typ] = zaznam
+
+    def __str__(self):
+        return self.nazov

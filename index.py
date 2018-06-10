@@ -1,4 +1,4 @@
-from pygtrie import Trie
+from pygtrie import CharTrie
 from uzol import Uzol
 from zaznam import Zaznam
 
@@ -7,7 +7,7 @@ class Index:
     def __init__(self):
         self.zoznamkrajin = set()
         self.uzly = {}
-        self.strom = Trie()
+        self.strom = CharTrie()
         self.strom.enable_sorting(enable=True)
 
 
@@ -23,8 +23,9 @@ class Index:
         self.uzly[nazov].pridajzaznam(Zaznam(zaznam))
 
     def hladaj(self, text):
-        self.strom.itervalues(prefix=text)
+        return self.strom.itervalues(prefix=text)
 
     def spravstrom(self):
         for i in self.uzly:
             self.strom[i.lower()] = self.uzly[i]
+            print("Pridal som: "+i.lower() + ", " + str(self.uzly[i]))
