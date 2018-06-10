@@ -1,43 +1,30 @@
-import xml.etree.ElementTree
-from urllib.request import urlretrieve
-import threading
-from typ import typ
-
+from pygtrie import Trie
+from uzol import Uzol
+from zaznam import Zaznam
 
 class Index:
-    adresa = 'http://download.osmand.net/get_indexes.php'
-    meno = 'zoznam.xml'
-    kam = ''
-    zoznamtypov = ['hillshade', 'map', 'wikimap', 'wikivoyage', 'voice', 'fonts', 'depth', 'road_map', 'srtm_map', 'region']
-    typy = {}
 
     def __init__(self):
-        for t in self.zoznamtypov:
-            self.typy[t] = typ(t)
-
-    def stiahnizoznam(self, kolbek, koniec):
-        self.odkial = self.kam+self.meno
-
-        def makaj():
-            # urlretrieve(self.adresa, self.kam + self.meno, kolbek)
-            koniec()
-        vlakno = threading.Thread(target=makaj)
-        vlakno.start()
-
-    def spravstrom(self, koniec):
-        def makaj():
-            self.strom = xml.etree.ElementTree.parse(self.odkial)
-            self.koren = self.strom.getroot()
-            self.spravzoznamy()
-            koniec()
-        vlakno = threading.Thread(target=makaj)
-        vlakno.start()
+        self.zoznamkrajin = set()
+        self.uzly = {}
+        self.strom = Trie()
+        self.strom.enable_sorting(enable=True)
 
 
-    def spravzoznamy(self):
-        for dieta in self.koren:
-            try:
-                #print("Pridavam: "+dieta.attrib['type'])
-                self.typy[dieta.attrib['type']].pridajzaznam(dieta)
-            except KeyError as inst:
-                print("KeyError:"+str(inst))
+    def pridajzaznam(self, zaznam):
+        name = zaznam.attrib['name'].split("_")
+        nazov = name[0]
+        if len(name) > 3:
+            nazov += '-'
+            nazov += name[1]
+        if nazov not in self.zoznamkrajin:
+            self.zoznamkrajin.add(nazov)
+            self.uzly[nazov] = Uzol(nazov)
+        self.uzly[nazov].pridajzaznam(Zaznam(zaznam))
+
+    def hladaj(self, text):
+        self.strom.itervalues(prefix=text)
+
+    def spravstrom(self):
+        for i in self.uzly:
+            self.strom[i.lower()] = self.uzly[i]
