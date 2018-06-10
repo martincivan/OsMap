@@ -34,40 +34,37 @@
                 Accordion:
                     orientation: 'vertical'
                     AccordionItem:
-                        collapse: False
+                        title: 'Vyber kontinentu'
+                        GridLayout:
+                            orientation: 'horizontal'
+                            rows: 2
+                            cols: 1
+                            TextInput:
+                                id: hladaj
+                                multiline: False
+                                size_hint_y: 0.1
+                                font_size: self.height - 10
+                                hint_text: 'Hladaj'
+                                on_text: root.hladaj()
+                                disabled: True
+                            RecycleView:
+                                id: vyberkrajinu
+                                viewclass: 'Zobrazenie'
+                                SelectableRecycleBoxLayout:
+                                    id: lejaut_kontinentov
+                                    pri_vybere: root.vyberkontinent
+                                    default_size: None, dp(56)
+                                    default_size_hint: 1, None
+                                    size_hint_y: None
+                                    height: self.minimum_height
+                                    orientation: 'vertical'
+                    AccordionItem:
                         title: 'Vyber typu'
                         RecycleView:
-                            id: vybertyp
-                            viewclass: 'Zobrazenie'
-                            SelectableRecycleBoxLayout:
-                                id: lejaut_typov
-                                pri_vybere: root.vybertyp
-                                default_size: None, dp(56)
-                                default_size_hint: 1, None
-                                size_hint_y: None
-                                height: self.minimum_height
-                                orientation: 'vertical' 
-                    AccordionItem:
-                        title: 'Vyber kontinentu'
-                        RecycleView:
-                            id: vyberkontinent
-                            viewclass: 'Zobrazenie'
-                            SelectableRecycleBoxLayout:
-                                id: lejaut_kontinentov
-                                pri_vybere: root.vyberkontinent
-                                default_size: None, dp(56)
-                                default_size_hint: 1, None
-                                size_hint_y: None
-                                height: self.minimum_height
-                                orientation: 'vertical' 
-                    AccordionItem:
-                        title: 'Vyber krajiny'
-                        RecycleView:
-                            id: vyberkrajinu
+                            id: vybertypu
                             viewclass: 'Zobrazenie'
                             SelectableRecycleBoxLayout:
                                 id: lejaut_krajin
-                                pri_vybere: root.vyberkrajinu
                                 default_size: None, dp(56)
                                 default_size_hint: 1, None
                                 size_hint_y: None
@@ -82,8 +79,7 @@
                 size_hint_y: 0.9
                 pos_hint: {'center_x':0.5}
                 id: lejaut_nastaveni
-                
-<Zobrazenie>:    
+<Zobrazenie>:
     size_hint: (1, None)
     text: root.typ
     font_size: 0
@@ -91,7 +87,7 @@
     BoxLayout:
         canvas:
             Color:
-                rgb: (0.17578125, 0.57421875, 0.72265625) if root.selected else (0.3, 0.3, 0.3) 
+                rgb: (0.17578125, 0.57421875, 0.72265625) if root.selected else (0.3, 0.3, 0.3)
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
@@ -132,7 +128,7 @@
                     text_size: self.size
                     halign: 'right'
                     valign: 'middle'
-                    
+
     BoxLayout:
         size_hint_y: None
         height: "2dp"
