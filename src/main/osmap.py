@@ -3,7 +3,7 @@ import xml.etree.ElementTree
 from urllib.request import urlretrieve
 import threading
 from pathlib import Path
-from index import Index
+from src.main.index import Index
 
 class Osmap:
 
@@ -26,7 +26,7 @@ class Osmap:
         def makaj():
             adresa = self.konfig.get('Hlavne', 'adresazoznamov')
             self.kam = self.konfig.get('Hlavne', 'priecinok') + self.konfig.get('Hlavne', 'menozoznamov')
-            urlretrieve(adresa, self.kam , kolbek)
+            # urlretrieve(adresa, self.kam , kolbek)
             koniec()
         vlakno = threading.Thread(target=makaj)
         vlakno.start()

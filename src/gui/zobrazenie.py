@@ -1,14 +1,10 @@
-from index import Index
-from kivy.uix.listview import ListItemButton
-from kivy.uix.listview import SelectableView
-from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
 from kivy.properties import BooleanProperty
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.app import App
+
 
 class SelectableRecycleBoxLayout(LayoutSelectionBehavior, RecycleBoxLayout):
     pass
@@ -45,9 +41,6 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
         self.selected = is_selected
-        if is_selected:
+        if is_selected and self.pri_vybere is not None:
             # print(rv.layout_manager.selected_nodes)
-            self.pri_vybere(rv.data[index]["typ"])
-        else:
-            pass
-
+            self.pri_vybere(rv.data[index])

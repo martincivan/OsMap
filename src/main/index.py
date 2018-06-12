@@ -1,6 +1,6 @@
 from pygtrie import CharTrie
-from uzol import Uzol
-from zaznam import Zaznam
+from src.main.uzol import Uzol
+from src.main.zaznam import Zaznam
 
 class Index:
 
@@ -23,7 +23,7 @@ class Index:
         self.uzly[nazov].pridajzaznam(Zaznam(zaznam))
 
     def hladaj(self, text):
-        return self.strom.itervalues(prefix=text)
+        return self.strom.itervalues(prefix=text.lower())
 
     def spravstrom(self):
         for i in self.uzly:
