@@ -1,11 +1,12 @@
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
-from index import Index
 from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.settings import SettingsWithTabbedPanel
-from zobrazenie import Zobrazenie
-from osmap import Osmap
+from src.main.osmap import Osmap
+from src.gui.zobrazenie import Zobrazenie
+from kivy.uix.recycleview import RecycleView
+from kivy.properties import BooleanProperty
 
 
 
@@ -40,37 +41,31 @@ class Vsetko(FloatLayout):
         text = vstup.text
         if len(text) > 2:
             print("Hladaj: "+text)
-            vysledok = Main.osmap.index.hladaj(text)
-            if vysledok is not None:
-                vyberkrajinu = self.ids["vyberkrajinu"]
-                vyberkrajinu.data = [{"datum" : "datum",
-                                    "ikona" : "ikony/icon.png",
-                                    "nadpis" : str(x),
-                                    "popis" : "Redkovka " + str(x.nazov),
-                                    "pri_vybere" : self.vybertyp,
-                                    "typ" : str(x),
-                                    "velkost" : "velkost",
-                                    "zaznam" : x.nazov} for x in vysledok]
+            try:
+                vysledok = Main.osmap.index.hladaj(text)
+                if vysledok is not None:
+                    vyberkrajinu = self.ids["vyberkrajinu"]
+                    vyberkrajinu.data = [{"ikona" : "ikony/icon.png",
+                                        "nadpis" : str(x),
+                                        "popis" : "Redkovka " + str(x.nazov),
+                                        "pri_vybere" : self.vyberkrajinu,
+                                        "uzol" : x} for x in vysledok]
+            except KeyError:
+                vyberkrajiny = self.ids["vyberkrajinu"]
+                vyberkrajiny.data = [{"datum": "datum",
+                                      "ikona": "ikony/ne.png",
+                                      "nadpis": "Nic som nenasiel",
+                                      "popis": "Ozaj nic",
+                                      "selectable": BooleanProperty(False)}]
 
-    def vybertyp(self, *args):
-        print("Vybral som typ")
-       
     def vyberkrajinu(self, *args):
-        vyberkrajiny = self.ids["vyberkrajinu"]
-        # t = self.index.typy[self.vybraty_typ]
-        # k = t.kontinenty[args[0]]
-        #
-        # for x in range(len(vyberkrajiny.data)):
-        #     vyberkrajiny._layout_manager.deselect_node(x)
-        #
-        # vyberkrajiny.data = [{"datum" : "datum",
-        #                     "ikona" : "ikony/icon.png",
-        #                     "nadpis" : x.pekny_nazov(),
-        #                     "popis" : "Subor: " + x.nazov,
-        #                     "pri_vybere" : self.vyberkrajinu,
-        #                     "typ" : str(x),
-        #                     "velkost" : "velkost" } for x in sorted(k.zaznamy, key = lambda zaznam: zaznam.pekny_nazov())]
-        pass
+        vybertypu = self.ids["vybertypu"]
+        vybertypu.data = [{
+            "datum": j.cas,
+            "nadpis": i,
+            "velkost": j.velkost
+        } for i, j in args[0]["uzol"].zaznamy]
+
     
     def nastav_obrazovku(self, obrazovka):
         obrazovky = self.ids["obrazovky"]
