@@ -64,6 +64,9 @@ class Vsetko(FloatLayout):
             "velkost": j.velkost
         } for i, j in args[0]["uzol"].zaznamy]
 
+        vyber_typu_acc = self.ids["vyber_typu_acc"]
+        vyber_typu_acc.collapse = False
+
     
     def nastav_obrazovku(self, obrazovka):
         obrazovky = self.ids["obrazovky"]
