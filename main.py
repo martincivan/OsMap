@@ -14,7 +14,8 @@ class Vsetko(FloatLayout):
     sceny = {}
 
     def zozenzoznam(self):
-        postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3), pos_hint={'center': (.5, .5)})
+        postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3),
+                                 pos_hint={'center': (.5, .5)})
         progresbar = ProgressBar(max=128)
         postupstahovania.add_widget(progresbar)
         self.add_widget(postupstahovania)
@@ -31,30 +32,38 @@ class Vsetko(FloatLayout):
                 stavzoznamu.text = "Zoznam map je aktualny"
                 hladaj = self.ids["hladaj"]
                 hladaj.disabled = False
+
             Main.osmap.spravstrom(koniec)
+
         Main.osmap.stiahnizoznam(kolbek, dostahovane)
 
     def hladaj(self):
         vstup = self.ids["hladaj"]
         text = vstup.text
         if len(text) > 2:
-            print("Hladaj: "+text)
+            print("Hladaj: " + text)
             try:
                 vysledok = Main.osmap.index.hladaj(text)
                 if vysledok is not None:
                     vyberkrajinu = self.ids["vyberkrajinu"]
-                    vyberkrajinu.data = [{"ikona" : "ikony/icon.png",
-                                        "nadpis" : str(x),
-                                        "popis" : "Redkovka " + str(x.nazov),
-                                        "pri_vybere" : self.vyberkrajinu,
-                                        "uzol" : x} for x in vysledok]
+                    vyberkrajinu.data = [{"ikona": "ikony/icon.png",
+                                          "datum": "",
+                                          "nadpis": str(x),
+                                          "popis": "Redkovka " + str(x.nazov),
+                                          "pri_vybere": self.vyberkrajinu,
+                                          "uzol": x} for x in vysledok]
             except KeyError:
+                vyber_typu_acc = self.ids["vyber_typu_acc"]
+                vyber_typu_acc.disabled = True
                 vyberkrajiny = self.ids["vyberkrajinu"]
-                vyberkrajiny.data = [{"datum": "datum",
+                vyberkrajiny.data = [{"datum": "",
                                       "ikona": "ikony/ne.png",
                                       "nadpis": "Nic som nenasiel",
-                                      "popis": "Ozaj nic",
-                                      "selectable": BooleanProperty(False)}]
+                                      "popis": "Skus zadat skutocny nazov krajiny ty expert",
+                                      "pri_vybere": None,
+                                      "selectable": BooleanProperty(False),
+                                      "uzol": None}]
+                vyberkrajiny._layout_manager.deselect_node(0)
 
     def vyberkrajinu(self, *args):
         vybertypu = self.ids["vybertypu"]
@@ -65,9 +74,9 @@ class Vsetko(FloatLayout):
         } for i, j in args[0]["uzol"].zaznamy]
 
         vyber_typu_acc = self.ids["vyber_typu_acc"]
+        vyber_typu_acc.disabled = False
         vyber_typu_acc.collapse = False
 
-    
     def nastav_obrazovku(self, obrazovka):
         obrazovky = self.ids["obrazovky"]
         obrazovky.current = obrazovka
@@ -90,19 +99,18 @@ class Vsetko(FloatLayout):
 
 class Chyba(FloatLayout):
     orientation = 'vertical'
-    
+
     def nasatv_spravu(self, sprava):
         label = self.ids['sprava']
         label.text = label.text % sprava
-        
+
 
 class Main(App):
-
-    osmap=Osmap()
+    osmap = Osmap()
 
     def build(self):
-        self.title='OsMap'
-        self.icon='ikony/icon.png'
+        self.title = 'OsMap'
+        self.icon = 'ikony/icon.png'
         try:
             self.osmap.nacitajnastavenia()
             self.sceny = set()
