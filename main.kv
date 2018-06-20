@@ -12,7 +12,8 @@
                 with_previous: False if obrazovky.current == 'hlavna' else True
                 on_release: root.nastav_obrazovku('hlavna')
             ActionButton:
-                text: 'Stiahni'
+                text: 'Stiahni ' + str(len(root.na_stiahnutie)) + ' suborov' if len(root.na_stiahnutie) > 0 else 'Vyber subory na stiahnutie'
+                disabled: False if len(root.na_stiahnutie) > 0 else True
                 background_color:[0.17578125, 0.57421875, 0.72265625]
                 id: stiahni
             ActionLabel:
