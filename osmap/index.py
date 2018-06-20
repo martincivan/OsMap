@@ -13,6 +13,8 @@ class Index:
 
     def pridajzaznam(self, zaznam):
         name = zaznam.attrib['name'].split("_")
+        if name[0].lower() == 'hillshade':
+            name.remove(name[0])
         nazov = name[0]
         if len(name) > 3:
             nazov += '-'
