@@ -109,7 +109,7 @@
             cols: 2
             spacing: "10dp"
             Image:
-                source: 'ikony/iconka.png' if root.selected else root.ikona
+                source: root.ikona + 'selected.png' if root.selected else root.ikona + 'not_selected.png'
                 size_hint_x: None
                 width: self.height
                 pos_hint: {'center_y' : 0.5}

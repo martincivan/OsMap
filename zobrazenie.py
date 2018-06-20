@@ -20,7 +20,7 @@ class SelectableRecycleBoxLayout(LayoutSelectionBehavior, RecycleBoxLayout):
 
 class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     typ = StringProperty()
-    ikona = StringProperty()#"ikony/icon.png"
+    ikona = StringProperty('ikony/default/')#"ikony/icon.png"
     nadpis = StringProperty()#"Redkovka"
     popis = StringProperty()#"Toto je barjaka redkovka"
     datum = StringProperty()#"9.6.2017"

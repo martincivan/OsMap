@@ -51,8 +51,8 @@ class Vsetko(FloatLayout):
                     vyberkrajinu.layout_manager.clear_selection()
                     vyber_typu_acc = self.ids["vyber_typu_acc"]
                     vyber_typu_acc.disabled = True
-                    vyberkrajinu.data = [{"ikona": "ikony/icon.png",
-                                          "datum": "",
+                    vyberkrajinu.data = [{"datum": "",
+                                          "ikona": "ikony/default/",
                                           "nadpis": str(x),
                                           "popis": "Redkovka " + str(x.nazov),
                                           "pri_vybere": self.vyberkrajinu,
@@ -62,7 +62,7 @@ class Vsetko(FloatLayout):
                 vyber_typu_acc.disabled = True
                 vyberkrajiny = self.ids["vyberkrajinu"]
                 vyberkrajiny.data = [{"datum": "",
-                                      "ikona": "ikony/ne.png",
+                                      "ikona": "ikony/ne/",
                                       "nadpis": "Nic som nenasiel",
                                       "popis": "Skus zadat skutocny nazov krajiny ty expert",
                                       "pri_vybere": None,
@@ -74,7 +74,7 @@ class Vsetko(FloatLayout):
         vybertypu = self.ids["vybertypu"]
         vybertypu.data = [{
             "datum": j.cas,
-            "ikona": '',
+            "ikona": j.miesto_ikony(),
             "nadpis": i,
             "popis": j.popis,
             "pri_vybere": self.vyber_subor,
