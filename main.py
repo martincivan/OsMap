@@ -5,6 +5,7 @@ from kivy.uix.progressbar import ProgressBar
 from kivy.uix.settings import SettingsWithTabbedPanel
 from osmap.osmap import Osmap
 from kivy.properties import BooleanProperty
+from kivy.properties import ListProperty
 from zobrazenie import Zobrazenie
 
 
@@ -12,6 +13,7 @@ class Vsetko(FloatLayout):
     orientation = 'vertical'
     global pole
     sceny = {}
+    na_stiahnutie = ListProperty()
 
     def zozenzoznam(self):
         postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3),
@@ -46,6 +48,9 @@ class Vsetko(FloatLayout):
                 vysledok = Main.osmap.index.hladaj(text)
                 if vysledok is not None:
                     vyberkrajinu = self.ids["vyberkrajinu"]
+                    vyberkrajinu.layout_manager.clear_selection()
+                    vyber_typu_acc = self.ids["vyber_typu_acc"]
+                    vyber_typu_acc.disabled = True
                     vyberkrajinu.data = [{"ikona": "ikony/icon.png",
                                           "datum": "",
                                           "nadpis": str(x),
@@ -63,19 +68,36 @@ class Vsetko(FloatLayout):
                                       "pri_vybere": None,
                                       "selectable": BooleanProperty(False),
                                       "uzol": None}]
-                vyberkrajiny._layout_manager.deselect_node(0)
+                vyberkrajiny.layout_manager.deselect_node(0)
 
     def vyberkrajinu(self, *args):
         vybertypu = self.ids["vybertypu"]
         vybertypu.data = [{
             "datum": j.cas,
+            "ikona": '',
             "nadpis": i,
-            "velkost": j.velkost
+            "popis": j.popis,
+            "pri_vybere": self.vyber_subor,
+            "pri_zruseni": self.zrus_subor,
+            "velkost": j.velkost,
+            "zaznam": j
         } for i, j in args[0]["uzol"].zaznamy]
+
+        for node in range(len(vybertypu.data)):
+            if vybertypu.data[node]["zaznam"] in self.na_stiahnutie:
+                vybertypu.layout_manager.select_node(node)
+            else:
+                vybertypu.layout_manager.deselect_node(node)
 
         vyber_typu_acc = self.ids["vyber_typu_acc"]
         vyber_typu_acc.disabled = False
         vyber_typu_acc.collapse = False
+
+    def vyber_subor(self, vybraty):
+        self.na_stiahnutie.append(vybraty["zaznam"])
+
+    def zrus_subor(self, zruseny):
+        self.na_stiahnutie.remove(zruseny["zaznam"])
 
     def nastav_obrazovku(self, obrazovka):
         obrazovky = self.ids["obrazovky"]

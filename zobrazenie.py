@@ -8,12 +8,13 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 
 class SelectableRecycleBoxLayout(LayoutSelectionBehavior, RecycleBoxLayout):
 
-    def select_with_touch(self, node, touch):
+    def select_with_touch(self, node, touch=None):
         if node.pri_vybere is not None:
             super(SelectableRecycleBoxLayout, self).select_with_touch(node.index, touch)
-            print(node.nadpis)
             if node.selected:
                 node.pri_vybere(self.parent.data[node.index])
+            else:
+                node.pri_zruseni(self.parent.data[node.index])
     
 
 
@@ -29,6 +30,7 @@ class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
     pri_vybere = None
+    pri_zruseni = None
 
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
