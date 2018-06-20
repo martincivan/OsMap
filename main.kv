@@ -48,9 +48,12 @@
                             TextInput:
                                 id: hladaj
                                 multiline: False
+                                cursor_color: (0.17578125, 0.57421875, 0.72265625, 1)
                                 size_hint_y: 0.1
-                                font_size: self.height - 10
-                                hint_text: 'Hladaj'
+                                size_hint_x: 0.95
+                                font_size: self.height * 0.5
+                                padding: [self.width * 0.01, self.height * 0.2]
+                                hint_text: 'Hladaj krajinu'
                                 on_text: root.hladaj()
                                 disabled: True
                             RecycleView:
