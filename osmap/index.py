@@ -1,6 +1,9 @@
 from pygtrie import CharTrie
 from osmap.uzol import Uzol
 from osmap.zaznam import Zaznam
+from babel import Locale
+import babel.core
+import pycountry
 
 class Index:
 
@@ -13,9 +16,28 @@ class Index:
 
     def pridajzaznam(self, zaznam):
         name = zaznam.attrib['name'].split("_")
-        if name[0].lower() == 'hillshade':
+        typ = zaznam.attrib['type']
+        nazov = ''
+
+        if typ == 'hillshade':
             name.remove(name[0])
-        nazov = name[0]
+            nazov = name[0]
+
+        elif typ == 'voice':
+            jazyk = name[0].split('-')[0]
+            try:
+                lokale = Locale.parse(babel.core.LOCALE_ALIASES[jazyk])
+                nazov = lokale.get_territory_name(Locale('en'))
+
+            except KeyError:
+                print('Nerozoznal som skratku jazyka: ' + jazyk)
+                nazov = 'Voice ' + jazyk
+
+            print(nazov)
+
+        else:
+            nazov = name[0]
+
         if len(name) > 3:
             nazov += '-'
             nazov += name[1]
