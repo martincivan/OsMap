@@ -11,12 +11,13 @@ class Osmap:
 
     def nacitajnastavenia(self):
         konfig_cesta = Path('nastavenia/nastavenia.ini')
-        konfig_json_cesta = Path('nastavenia/nastavenia.json')
-        if konfig_cesta.is_file() and konfig_json_cesta.is_file():
-            self.konfig.read('nastavenia/nastavenia.ini')
+        self.konfig_json_cesta = Path('nastavenia/nastavenia.json')
+        if konfig_cesta.is_file() and self.konfig_json_cesta.is_file():
+            self.konfig.read(str(konfig_cesta))
             direktoria = Path(self.konfig.get('Hlavne', 'priecinok'))
             if not direktoria.exists():
-                self.konfig.set('Hlavne', 'priecinok', Path.home())
+                self.konfig.set('Hlavne', 'priecinok', Path('').resolve())
+                self.konfig.write()
         else:
             raise FileNotFoundError
 
@@ -24,7 +25,7 @@ class Osmap:
 
         def makaj():
             adresa = self.konfig.get('Hlavne', 'adresazoznamov')
-            self.kam = self.konfig.get('Hlavne', 'priecinok') + self.konfig.get('Hlavne', 'menozoznamov')
+            self.kam = Path(self.konfig.get('Hlavne', 'priecinok')) / Path(self.konfig.get('Hlavne', 'menozoznamov'))
             # urlretrieve(adresa, self.kam , kolbek)
             koniec()
         vlakno = threading.Thread(target=makaj)

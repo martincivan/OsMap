@@ -113,7 +113,7 @@ class Vsetko(FloatLayout):
             nastavenia = SettingsWithTabbedPanel()
             nastavenia.bind(on_close=(lambda l: self.nastav_obrazovku("hlavna")))
             lejaut = self.ids["lejaut_nastaveni"]
-            nastavenia.add_json_panel("Hlavne", Main.osmap.konfig, "nastavenia/nastavenia.json")
+            nastavenia.add_json_panel("Hlavne", Main.osmap.konfig, str(Main.osmap.konfig_json_cesta))
             lejaut.add_widget(nastavenia)
             self.sceny['nastavenia'] = nastavenia
         self.nastav_obrazovku('nastavenia')
