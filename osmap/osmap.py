@@ -12,7 +12,8 @@ class Osmap:
     def nacitajnastavenia(self):
         konfig_cesta = Path('nastavenia/nastavenia.ini')
         self.konfig_json_cesta = Path('nastavenia/nastavenia.json')
-        if konfig_cesta.is_file() and self.konfig_json_cesta.is_file():
+        self.konfig_json_priecinky = Path('nastavenia/nastavenia_priecinkov.json')
+        if konfig_cesta.is_file() and self.konfig_json_cesta.is_file() and self.konfig_json_priecinky:
             self.konfig.read(str(konfig_cesta))
             direktoria = Path(self.konfig.get('Hlavne', 'priecinok'))
             if not direktoria.exists():

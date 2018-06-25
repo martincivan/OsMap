@@ -1,0 +1,69 @@
+[
+  {
+    "type": "title",
+    "title": "OsMap - priecinky"
+  },
+  {
+    "type": "path",
+    "title": "Depth",
+    "desc": "Kam sa maju stahovat depth subory",
+    "section": "Priecinky",
+    "key": "p_depth"
+  },
+  {
+    "type": "path",
+    "title": "Fonts",
+    "desc": "Kam sa maju stahovat fonts subory",
+    "section": "Priecinky",
+    "key": "p_fonts"
+  },
+  {
+    "type": "path",
+    "title": "Hillshade",
+    "desc": "Kam sa maju stahovat hillshade subory",
+    "section": "Priecinky",
+    "key": "p_hillshade"
+  },
+  {
+    "type": "path",
+    "title": "Map",
+    "desc": "Kam sa maju stahovat map subory",
+    "section": "Priecinky",
+    "key": "p_map"
+  },
+  {
+    "type": "path",
+    "title": "Road map",
+    "desc": "Kam sa maju stahovat road map subory",
+    "section": "Priecinky",
+    "key": "p_road_map"
+  },
+  {
+    "type": "path",
+    "title": "Voice",
+    "desc": "Kam sa maju stahovat voice subory",
+    "section": "Priecinky",
+    "key": "p_voice"
+  },
+  {
+    "type": "path",
+    "title": "SRTM map",
+    "desc": "Kam sa maju stahovat srtm map subory",
+    "section": "Priecinky",
+    "key": "p_srtm_map"
+  },
+  {
+    "type": "path",
+    "title": "Wikimap",
+    "desc": "Kam sa maju stahovat wikimap subory",
+    "section": "Priecinky",
+    "key": "p_wikimap"
+  },
+  {
+    "type": "path",
+    "title": "Wikivoyage",
+    "desc": "Kam sa maju stahovat wikivoyage subory",
+    "section": "Priecinky",
+    "key": "p_wikivoyage"
+  }
+]
