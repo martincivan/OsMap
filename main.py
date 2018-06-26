@@ -66,20 +66,19 @@ class Vsetko(FloatLayout):
                                       "nadpis": "Nic som nenasiel",
                                       "popis": "Skus zadat skutocny nazov krajiny ty expert",
                                       "pri_vybere": None,
-                                      "selectable": BooleanProperty(False),
                                       "uzol": None}]
                 vyberkrajiny.layout_manager.deselect_node(0)
 
     def vyberkrajinu(self, *args):
         vybertypu = self.ids["vybertypu"]
         vybertypu.data = [{
-            "datum": j.cas,
+            "datum": j.datum,
             "ikona": j.miesto_ikony(),
             "nadpis": i,
             "popis": j.popis,
             "pri_vybere": self.vyber_subor,
             "pri_zruseni": self.zrus_subor,
-            "velkost": j.velkost,
+            "velkost": j.mbsuboru + ' MB',
             "zaznam": j
         } for i, j in args[0]["uzol"].zaznamy]
 

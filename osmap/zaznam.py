@@ -10,6 +10,7 @@ class Zaznam:
         self.velkost = zaznam.attrib['contentSize']
         self.velkostzipu = zaznam.attrib['containerSize']
         self.cas = zaznam.attrib['timestamp']
+        self.datum = zaznam.attrib['date']
         self.subor = zaznam.attrib['name']
 
     def miesto_ikony(self):
