@@ -9,5 +9,12 @@
         "desc": "Hlavny priecinok s datami",
         "section": "Hlavne",
         "key": "priecinok"
+    },
+      {
+        "type": "numeric",
+        "title": "Obnovovanie zoznamu",
+        "desc": "Ako casto sa ma zoznam map obnovovat (dni)",
+        "section": "Hlavne",
+        "key": "frekvencia_stahovania_zoznamu"
     }
 ]

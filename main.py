@@ -15,7 +15,11 @@ class Vsetko(FloatLayout):
     sceny = {}
     na_stiahnutie = ListProperty()
 
-    def zozenzoznam(self):
+    def __init__(self):
+        super(Vsetko, self).__init__()
+        self.zozenzoznam()
+
+    def zozenzoznam(self, stiahnut=False):
         postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3),
                                  pos_hint={'center': (.5, .5)})
         progresbar = ProgressBar(max=128)
@@ -37,7 +41,7 @@ class Vsetko(FloatLayout):
 
             Main.osmap.spravstrom(koniec)
 
-        Main.osmap.stiahnizoznam(kolbek, dostahovane)
+        Main.osmap.stiahnizoznam(kolbek, dostahovane, stiahnut=stiahnut)
 
     def hladaj(self):
         vstup = self.ids["hladaj"]
