@@ -1,6 +1,6 @@
 from pygtrie import CharTrie
-from osmap.uzol import Uzol
-from osmap.zaznam import Zaznam
+from uzol import Uzol
+from zaznam import Zaznam
 from babel import Locale
 import babel.core
 import pycountry
