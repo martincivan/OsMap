@@ -3,7 +3,6 @@ from uzol import Uzol
 from zaznam import Zaznam
 from babel import Locale
 import babel.core
-import pycountry
 
 class Index:
 

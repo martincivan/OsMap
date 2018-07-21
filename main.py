@@ -141,7 +141,7 @@ class Main(App):
             self.osmap.nacitajnastavenia()
             self.sceny = set()
             return Vsetko()
-        except FileNotFoundError:
+        except IOError:
             chyba = Chyba()
             chyba.nasatv_spravu('Nepodarilo sa najst konfiguraciu.')
             return chyba
