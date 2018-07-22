@@ -16,6 +16,7 @@
                 disabled: False if len(root.na_stiahnutie) > 0 else True
                 background_color:[0.17578125, 0.57421875, 0.72265625]
                 id: stiahni
+                on_release: root.potvrdstiahnutie()
             ActionLabel:
                 id: stavzoznamumap
                 text: 'zoznam map nie je aktualizovany'
@@ -91,6 +92,35 @@
                 size_hint_y: 0.9
                 pos_hint: {'center_x':0.5}
                 id: lejaut_nastaveni
+        Screen:
+            id: obrazovka_na_stiahnutie
+            name: 'na stiahnutie'
+            BoxLayout:
+                size_hint_y: 0.9
+                pos_hint: {'center_x':0.5}
+                orientation: 'vertical'
+                RecycleView:
+                    id: na_stiahnutie
+                    viewclass: 'Zobrazenie'
+                    SelectableRecycleBoxLayout:
+                        id: lejaut_na_stiahnutie
+                        pri_vybere: root.vyberkrajinu
+                        default_size: None, dp(56)
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        height: self.minimum_height
+                        orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: 0.1
+                    orientation: 'horizontal'
+                    Button:
+                        text: 'Zrusit'
+                        on_release: root.nastav_obrazovku('hlavna')
+                    Button:
+                        text: 'X'
+                    Button:
+                        text: 'Stiahni'
+                        on_release: root.dajstiahnut()
 <Zobrazenie>:
     size_hint: (1, None)
     text: root.typ

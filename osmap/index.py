@@ -4,6 +4,7 @@ from zaznam import Zaznam
 from babel import Locale
 import babel.core
 
+
 class Index:
 
     def __init__(self):
@@ -11,7 +12,6 @@ class Index:
         self.uzly = {}
         self.strom = CharTrie()
         self.strom.enable_sorting(enable=True)
-
 
     def pridajzaznam(self, zaznam):
         name = zaznam.attrib['name'].split("_")
@@ -32,8 +32,6 @@ class Index:
                 print('Nerozoznal som skratku jazyka: ' + jazyk)
                 nazov = 'Voice ' + jazyk
 
-            print(nazov)
-
         else:
             nazov = name[0]
 
@@ -51,4 +49,3 @@ class Index:
     def spravstrom(self):
         for i in self.uzly:
             self.strom[i.lower()] = self.uzly[i]
-            print("Pridal som: "+i.lower() + ", " + str(self.uzly[i]))

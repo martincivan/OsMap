@@ -72,13 +72,13 @@ orientation = all
 fullscreen = 0
 
 # (list) Permissions
-android.permissions = INTERNET
+android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 
 # (int) Android API to use
 #android.api = 19
 
 # (int) Minimum API required
-#android.minapi = 19
+android.minapi = 13
 
 # (int) Android SDK version to use
 #android.sdk = 19

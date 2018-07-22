@@ -17,7 +17,6 @@ class SelectableRecycleBoxLayout(LayoutSelectionBehavior, RecycleBoxLayout):
                 node.pri_zruseni(self.parent.data[node.index])
     
 
-
 class Zobrazenie(RecycleDataViewBehavior, BoxLayout):
     typ = StringProperty()
     ikona = StringProperty('ikony/default/')#"ikony/icon.png"

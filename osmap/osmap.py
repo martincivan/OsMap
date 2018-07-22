@@ -32,8 +32,7 @@ class Osmap:
             self.kam = Path(self.konfig.get('Hlavne', 'priecinok')) / Path(self.konfig.get('Hlavne', 'menozoznamov'))
             frekv_stahovania_zoznamu = self.konfig.get('Hlavne', 'frekvencia_stahovania_zoznamu')
             if stiahnut or not self.kam.exists() or (self.dni_zoznamu() > int(frekv_stahovania_zoznamu) > 0):
-                print('Stiahol by som novy zoznam')
-                urlretrieve(adresa, str(self.kam) , kolbek)
+                urlretrieve(adresa, str(self.kam), kolbek)
             koniec()
 
         vlakno = threading.Thread(target=makaj)
@@ -44,14 +43,11 @@ class Osmap:
         return vek.days
 
     def spravstrom(self, koniec):
-        # def makaj():
         self.strom = xml.etree.ElementTree.parse(str(self.kam))
         self.koren = self.strom.getroot()
         self.spravzoznamy()
         self.index.spravstrom()
         koniec()
-        # vlakno = threading.Thread(target=makaj)
-        # vlakno.start()
 
     def spravzoznamy(self):
         for dieta in self.koren:

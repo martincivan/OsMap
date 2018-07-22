@@ -4,16 +4,16 @@ from kivy.uix.popup import Popup
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.settings import SettingsWithTabbedPanel
 from osmap.osmap import Osmap
-from kivy.properties import BooleanProperty
 from kivy.properties import ListProperty
 from zobrazenie import Zobrazenie
+from osmap.zaznam import Zaznam
 
 
 class Vsetko(FloatLayout):
     orientation = 'vertical'
     global pole
     sceny = {}
-    na_stiahnutie = ListProperty()
+    na_stiahnutie = ListProperty()  #type:Zaznam
 
     def __init__(self):
         super(Vsetko, self).__init__()
@@ -121,6 +121,21 @@ class Vsetko(FloatLayout):
             lejaut.add_widget(nastavenia)
             self.sceny['nastavenia'] = nastavenia
         self.nastav_obrazovku('nastavenia')
+
+    def potvrdstiahnutie(self):
+        self.nastav_obrazovku('na stiahnutie')
+        vybertypu = self.ids["na_stiahnutie"]
+        vybertypu.data = [{
+            "datum": j.datum,
+            "ikona": j.miesto_ikony(),
+            "nadpis": j.subor,
+            "popis": j.popis,
+            "velkost": j.mbsuboru + ' MB',
+            "zaznam": j
+        } for j in self.na_stiahnutie]
+
+    def dajstiahnut(self):
+        pass
 
 
 class Chyba(FloatLayout):
