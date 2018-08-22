@@ -198,6 +198,22 @@
             size_hint_y: 0.2
             on_release: app.stop()
 
-            
-            
-            
+<ZobrazovacStahovania>
+    title: 'Stahujem'
+    GridLayout:
+        orientation: 'horizontal'
+        rows: 4
+        GridLayout:
+            cols: 2
+            Label:
+                text: "Subory: "
+            Label:
+                text: "/"
+                id: subory
+        ProgressBar:
+            id: progressbar
+        Label:
+            id: percenta
+            text: "%"
+        Button:
+            text: "Stop"

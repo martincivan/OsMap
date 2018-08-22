@@ -12,12 +12,26 @@ class Osmap:
     konfig = ConfigParser()
     index = Index()
 
-    def nacitajnastavenia(self):
+    def inicializujnastavenia(self, predvoleny_priecinok):
+        self.konfig.set('Hlavne', 'priecinok', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_depth', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_fonts', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_hillshade', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_map', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_road_map', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_voice', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_srtm_map', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_wikimap', predvoleny_priecinok)
+        self.konfig.set('Priecinky', 'p_wikivoyage', predvoleny_priecinok)
+
+    def nacitajnastavenia(self, predvoleny_priecinok):
         konfig_cesta = Path('nastavenia/nastavenia.ini')
         self.konfig_json_cesta = Path('nastavenia/nastavenia.json')
         self.konfig_json_priecinky = Path('nastavenia/nastavenia_priecinkov.json')
         if konfig_cesta.is_file() and self.konfig_json_cesta.is_file() and self.konfig_json_priecinky:
             self.konfig.read(str(konfig_cesta))
+            if self.konfig.get('Hlavne', 'priecinok') == '#':
+                self.inicializujnastavenia(predvoleny_priecinok)
             direktoria = Path(self.konfig.get('Hlavne', 'priecinok'))
             if not direktoria.exists():
                 self.konfig.set('Hlavne', 'priecinok', Path('').resolve())
@@ -38,6 +52,9 @@ class Osmap:
         vlakno = threading.Thread(target=makaj)
         vlakno.start()
 
+    def ukonci(self, *args):
+        print("got results {0}".format(args))
+
     def dni_zoznamu(self):
         vek = datetime.now() - datetime.fromtimestamp(os.path.getmtime(str(self.kam)))
         return vek.days
@@ -56,3 +73,6 @@ class Osmap:
     @property
     def typy(self):
         return list(self.index.zoznamtypov)
+
+    def dajStiahnut(self, co):
+        pass

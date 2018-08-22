@@ -7,6 +7,8 @@ from osmap.osmap import Osmap
 from kivy.properties import ListProperty
 from zobrazenie import Zobrazenie
 from osmap.zaznam import Zaznam
+from zobrazovacstahovania import ZobrazovacStahovania
+#:include zobrazovacstahovania.kv
 
 
 class Vsetko(FloatLayout):
@@ -22,7 +24,7 @@ class Vsetko(FloatLayout):
     def zozenzoznam(self, stiahnut=False):
         postupstahovania = Popup(title='Stahujem zoznamy', auto_dismiss=False, size_hint=(.5, .3),
                                  pos_hint={'center': (.5, .5)})
-        progresbar = ProgressBar(max=128)
+        progresbar = ProgressBar(max=132)
         postupstahovania.add_widget(progresbar)
         self.add_widget(postupstahovania)
         stavzoznamu = self.ids["stavzoznamumap"]
@@ -135,7 +137,9 @@ class Vsetko(FloatLayout):
         } for j in self.na_stiahnutie]
 
     def dajstiahnut(self):
-        pass
+        zobrazovac = ZobrazovacStahovania()
+        zobrazovac.open()
+        Main.osmap.dajStiahnut(self.na_stiahnutie)
 
 
 class Chyba(FloatLayout):
@@ -153,7 +157,7 @@ class Main(App):
         self.title = 'OsMap'
         self.icon = 'ikony/icon.png'
         try:
-            self.osmap.nacitajnastavenia()
+            self.osmap.nacitajnastavenia(self.user_data_dir)
             self.sceny = set()
             return Vsetko()
         except IOError:
