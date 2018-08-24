@@ -74,5 +74,12 @@ class Osmap:
     def typy(self):
         return list(self.index.zoznamtypov)
 
-    def dajStiahnut(self, co):
-        pass
+    def dajStiahnut(self, co, kolbek):
+        def makaj():
+            nieco = co[1]
+            adresa = self.konfig.get('Hlavne', 'adresasuborov') + nieco.subor
+            self.kam = Path(self.konfig.get('Priecinky', 'p_' + nieco.typ)) / Path(nieco.subor)
+            urlretrieve(adresa, str(self.kam), kolbek)
+
+        vlakno = threading.Thread(target=makaj)
+        vlakno.start()

@@ -29,7 +29,7 @@ class Vsetko(FloatLayout):
         self.add_widget(postupstahovania)
         stavzoznamu = self.ids["stavzoznamumap"]
 
-        def kolbek(blocks, block_size, total_size):
+        def kolbecik(blocks, block_size, total_size):
             progresbar.value = blocks
 
         def dostahovane():
@@ -43,7 +43,7 @@ class Vsetko(FloatLayout):
 
             Main.osmap.spravstrom(koniec)
 
-        Main.osmap.stiahnizoznam(kolbek, dostahovane, stiahnut=stiahnut)
+        Main.osmap.stiahnizoznam(kolbecik, dostahovane, stiahnut=stiahnut)
 
     def hladaj(self):
         vstup = self.ids["hladaj"]
@@ -136,10 +136,18 @@ class Vsetko(FloatLayout):
             "zaznam": j
         } for j in self.na_stiahnutie]
 
+    def kolbek(self, blocks, block_size, total_size):
+        self.zobrazovac.velkostbloku = block_size
+        self.zobrazovac.velkost = total_size
+        self.zobrazovac.sblokov = blocks
+
     def dajstiahnut(self):
-        zobrazovac = ZobrazovacStahovania()
-        zobrazovac.open()
-        Main.osmap.dajStiahnut(self.na_stiahnutie)
+        self.zobrazovac = ZobrazovacStahovania()
+        self.zobrazovac.percenta = self.ids["percenta"]
+        self.zobrazovac.subory = self.ids["subory"]
+        self.zobrazovac.suborov = len(self.na_stiahnutie)
+        self.zobrazovac.open()
+        Main.osmap.dajStiahnut(self.na_stiahnutie, self.kolbek)
 
 
 class Chyba(FloatLayout):
