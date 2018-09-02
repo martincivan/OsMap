@@ -136,18 +136,11 @@ class Vsetko(FloatLayout):
             "zaznam": j
         } for j in self.na_stiahnutie]
 
-    def kolbek(self, blocks, block_size, total_size):
-        self.zobrazovac.velkostbloku = block_size
-        self.zobrazovac.velkost = total_size
-        self.zobrazovac.sblokov = blocks
-
     def dajstiahnut(self):
         self.zobrazovac = ZobrazovacStahovania()
-        self.zobrazovac.percenta = self.ids["percenta"]
-        self.zobrazovac.subory = self.ids["subory"]
         self.zobrazovac.suborov = len(self.na_stiahnutie)
         self.zobrazovac.open()
-        Main.osmap.dajStiahnut(self.na_stiahnutie, self.kolbek)
+        Main.osmap.dajStiahnut(self.na_stiahnutie, self.zobrazovac)
 
 
 class Chyba(FloatLayout):

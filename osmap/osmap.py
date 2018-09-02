@@ -6,6 +6,7 @@ import os.path
 from datetime import datetime
 from index import Index
 from urllib import urlretrieve
+from stahovac import Stahovac
 
 
 class Osmap:
@@ -74,12 +75,6 @@ class Osmap:
     def typy(self):
         return list(self.index.zoznamtypov)
 
-    def dajStiahnut(self, co, kolbek):
-        def makaj():
-            nieco = co[1]
-            adresa = self.konfig.get('Hlavne', 'adresasuborov') + nieco.subor
-            self.kam = Path(self.konfig.get('Priecinky', 'p_' + nieco.typ)) / Path(nieco.subor)
-            urlretrieve(adresa, str(self.kam), kolbek)
-
-        vlakno = threading.Thread(target=makaj)
-        vlakno.start()
+    def dajStiahnut(self, co, zobrazovac):
+        stahovac = Stahovac(co, zobrazovac, None, self.konfig)
+        stahovac.stiahni()

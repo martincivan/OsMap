@@ -1,19 +1,19 @@
-from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from kivy.uix.progressbar import ProgressBar
 
 
 class ZobrazovacStahovania(Popup):
 
-    def __init__(self):
-        self.suborov = 0
+    def __init__(self, **kwargs):
+        super(ZobrazovacStahovania, self).__init__(**kwargs)
+        self._suborov = 0
         self._stiahnutych = 0
         self.velkost = 0
         self.blokov = 0
         self.velkostbloku = 0
-        self._sblokov = 0
-        self.subory = None
-        self.percenta = None
+        self._stiahnutychblokov = 0
+        self.subory = self.ids.subory
+        self.percenta = self.ids.percenta
+        self.progresbar = self.ids.progressbar
 
     @property
     def stiahnutych(self):
@@ -28,12 +28,20 @@ class ZobrazovacStahovania(Popup):
         self.nastavsubory()
 
     @property
-    def sblokov(self):
-        return self._sblokov
+    def stiahnutychblokov(self):
+        return self._stiahnutych
 
-    @sblokov.setter
-    def sblokov(self, sblokov):
-        self._sblokov = sblokov
-        # self.percenta = ProgressBar()
-        self.percenta.max = 100
-        self.percenta.value = sblokov
+    @stiahnutychblokov.setter
+    def stiahnutychblokov(self, sblokov):
+        self._stiahnutychblokov = sblokov
+        self.progresbar.max = int(self.velkost/self.velkostbloku)
+        self.progresbar.value = sblokov
+
+    @property
+    def suborov(self):
+        return self._suborov
+
+    @suborov.setter
+    def suborov(self, suborov):
+        self._suborov = suborov
+        self.nastavsubory()
